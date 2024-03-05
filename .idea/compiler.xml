@@ -10,8 +10,8 @@
         <module name="config-server" />
         <module name="student" />
         <module name="school" />
-        <module name="gateway" />
         <module name="discovery" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
   </component>

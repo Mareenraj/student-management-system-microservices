@@ -1,0 +1,19 @@
+eureka:
+  client:
+    register-with-eureka: false
+server:
+  port: 8222
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: students
+            uri: http://localhost:8090
+            predicates:
+              - Path=/api/v1/student/**
+          - id: schools
+            uri: http://localhost:8091
+            predicates:
+              - Path=/api/v1/school/**

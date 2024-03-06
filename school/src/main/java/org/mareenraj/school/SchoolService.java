@@ -5,6 +5,7 @@ import org.mareenraj.school.client.StudentClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,26 @@ public class SchoolService {
                 .email(school.getEmail())
                 .students(students)
                 .build();
+    }
+
+    public void deleteSchoolById(Long id){
+        schoolRepository.deleteById(id);
+    }
+
+    public School getSchoolById(Long id){
+        Optional<School> schoolOptional = schoolRepository.findById(id);
+        return schoolOptional.orElse(null);
+    }
+
+    public School updateSchoolById(Long id, School updatedSchool){
+        Optional<School> schoolOptional = schoolRepository.findById(id);
+        if(schoolOptional.isPresent()){
+            School school = schoolOptional.get();
+            school.setName(updatedSchool.getName());
+            school.setEmail(updatedSchool.getEmail());
+            schoolRepository.save(school);
+            return school;
+        }
+        return null;
     }
 }

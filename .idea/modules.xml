@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Springboot microservcies.iml" filepath="$PROJECT_DIR$/.idea/Springboot microservcies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/student-management-system-microservices.iml" filepath="$PROJECT_DIR$/.idea/student-management-system-microservices.iml" />
     </modules>
   </component>
 </project>

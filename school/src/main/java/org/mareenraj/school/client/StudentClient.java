@@ -1,6 +1,6 @@
 package org.mareenraj.school.client;
 
-import org.mareenraj.school.Student;
+import org.mareenraj.school.response.Student;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,11 +1,13 @@
 package org.mareenraj.school.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.mareenraj.school.service.SchoolService;
-import org.mareenraj.school.model.School;
+import org.mareenraj.school.dto.SchoolDto;
 import org.mareenraj.school.response.FullSchoolResponse;
+import org.mareenraj.school.service.SchoolService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,17 +15,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/school")
 @RequiredArgsConstructor
+@Validated
 public class SchoolController {
     private final SchoolService schoolService;
 
     @PostMapping
-    public ResponseEntity<String> createSchool(@RequestBody School school) {
-        schoolService.saveSchool(school);
+    public ResponseEntity<String> createSchool(@RequestBody @Valid SchoolDto schoolDto) {
+        schoolService.saveSchool(schoolDto);
         return new ResponseEntity<>("School successfully added", HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<School>> getAllSchools() {
+    public ResponseEntity<List<SchoolDto>> getAllSchools() {
         return new ResponseEntity<>(schoolService.findAllSchool(), HttpStatus.OK);
     }
 
@@ -33,30 +36,20 @@ public class SchoolController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSchoolById(@PathVariable Long id){
+    public ResponseEntity<String> deleteSchoolById(@PathVariable Long id) {
         schoolService.deleteSchoolById(id);
         return new ResponseEntity<>("School deleted successfully!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<School> getSchoolById(@PathVariable("id") Long id){
-        School school = schoolService.getSchoolById(id);
-        if(school != null){
-            return new ResponseEntity<>(school, HttpStatus.FOUND);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<SchoolDto> getSchoolById(@PathVariable("id") Long id) {
+        SchoolDto schoolDto = schoolService.getSchoolById(id);
+        return new ResponseEntity<>(schoolDto, HttpStatus.FOUND);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<School> updateSchoolById(@PathVariable Long id, @RequestBody School school){
-        School updatedSchool = schoolService.updateSchoolById(id,school);
-        if(updatedSchool != null){
-            return new ResponseEntity<>(updatedSchool, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.valueOf("Can't update this school"));
-        }
+    public ResponseEntity<SchoolDto> updateSchoolById(@PathVariable Long id, @RequestBody @Valid SchoolDto schoolDto) {
+        SchoolDto updatedSchool = schoolService.updateSchoolById(id, schoolDto);
+        return new ResponseEntity<>(updatedSchool, HttpStatus.OK);
     }
 }

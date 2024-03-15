@@ -18,8 +18,8 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @PostMapping
-    public ResponseEntity<String> createStudent(@Valid @RequestBody StudentDto studentDto) {
+    @PostMapping("/save")
+    public ResponseEntity<String> createStudent( @RequestBody @Valid StudentDto studentDto) {
         studentService.saveStudent(studentDto);
         return new ResponseEntity<>("Student successfully created", HttpStatus.CREATED);
     }

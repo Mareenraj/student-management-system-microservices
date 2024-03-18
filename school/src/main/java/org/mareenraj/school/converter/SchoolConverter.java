@@ -20,5 +20,4 @@ public class SchoolConverter {
         }
         return new SchoolDto(school.getId(), school.getName(), school.getEmail(), school.getCountry(), school.getProvince(), school.getDistrict(), school.getAddress(), school.getPhoneNumber(), school.getWebsiteUrl());
     }
-
 }

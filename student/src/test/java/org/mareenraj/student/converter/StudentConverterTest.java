@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class StudentConverterTest {
-     StudentConverter studentConverter;
+    StudentConverter studentConverter;
 
     @BeforeEach
     void setUp() {
@@ -58,12 +58,11 @@ class StudentConverterTest {
 
     @Test
     void covertToStudent_IfStudentDtoEqualToNull() {
-        assertThrows(NullPointerException.class, ()->studentConverter.covertToStudentDto(null));
+        assertThrows(NullPointerException.class, () -> studentConverter.covertToStudentDto(null));
     }
 
     @Test
     void covertToStudentDto_IfStudentEqualToNull() {
-        assertThrows(NullPointerException.class, ()->studentConverter.covertToStudent(null));
+        assertThrows(NullPointerException.class, () -> studentConverter.covertToStudent(null));
     }
-
 }

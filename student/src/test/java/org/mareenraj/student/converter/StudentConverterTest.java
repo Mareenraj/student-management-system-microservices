@@ -1,5 +1,6 @@
 package org.mareenraj.student.converter;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mareenraj.student.dto.StudentDto;
 import org.mareenraj.student.model.Student;
@@ -8,11 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class StudentConverterTest {
 
-    @Autowired
-    private StudentConverter studentConverter;
+class StudentConverterTest {
+     StudentConverter studentConverter;
+
+    @BeforeEach
+    void setUp() {
+        studentConverter = new StudentConverter();
+    }
 
     @Test
     void covertToStudentDto() {

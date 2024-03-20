@@ -47,7 +47,7 @@ public class SchoolController {
         return new ResponseEntity<>(schoolDto, HttpStatus.FOUND);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<SchoolDto> updateSchoolById(@PathVariable Long id, @RequestBody @Valid SchoolDto schoolDto) {
         SchoolDto updatedSchool = schoolService.updateSchoolById(id, schoolDto);
         return new ResponseEntity<>(updatedSchool, HttpStatus.OK);

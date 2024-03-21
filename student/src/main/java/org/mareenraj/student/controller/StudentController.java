@@ -18,7 +18,7 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<String> createStudent( @RequestBody @Valid StudentDto studentDto) {
         studentService.saveStudent(studentDto);
         return new ResponseEntity<>("Student successfully created", HttpStatus.CREATED);
@@ -45,7 +45,7 @@ public class StudentController {
         return new ResponseEntity<>(studentService.getStudentById(id), HttpStatus.FOUND);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StudentDto> updateStudentById(@PathVariable Long id, @Valid @RequestBody StudentDto studentDto) {
         return new ResponseEntity<>(studentService.updateStudentById(id, studentDto), HttpStatus.OK);
     }

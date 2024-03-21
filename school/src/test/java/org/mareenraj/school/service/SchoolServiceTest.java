@@ -8,15 +8,19 @@ import org.mareenraj.school.dto.SchoolDto;
 import org.mareenraj.school.exception.SchoolNotFoundException;
 import org.mareenraj.school.model.School;
 import org.mareenraj.school.repository.SchoolRepository;
+import org.mareenraj.school.response.FullSchoolResponse;
+import org.mareenraj.school.response.Student;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,7 +69,32 @@ class SchoolServiceTest {
 
     @Test
     void findSchoolWithStudents() {
+        Long schoolId = 1L;
+        School school = new School(1L, "kokuvil hindu college", "robinmmareen@gmail.com", "Srilanka", "North", "Jaffna", "Navaly", "0771028389", "mareenWeb.com");
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1L, "John", "Doe", 20, "john.doe@example.com", "New York", "Male", "10th Grade", "1234567890", 1L));
+        students.add(new Student(2L, "Jane", "Doe", 19, "jane.doe@example.com", "New York", "Female", "10th Grade", "0987654321", 1L));
+        FullSchoolResponse expectedFullSchoolResponse = new FullSchoolResponse(school.getName(), school.getEmail(), students);
 
+        when(schoolRepository.findById(schoolId)).thenReturn(Optional.of(school));
+        when(studentClient.findStudentsBySchoolId(schoolId)).thenReturn(students);
+
+        FullSchoolResponse result = schoolService.findSchoolWithStudents(schoolId);
+
+        assertEquals(result.getName(), expectedFullSchoolResponse.getName());
+        assertEquals(result.getEmail(), expectedFullSchoolResponse.getEmail());
+        assertEquals(result.getStudents(), expectedFullSchoolResponse.getStudents());
+        verify(schoolRepository, times(1)).findById(schoolId);
+        verify(studentClient, times(1)).findStudentsBySchoolId(schoolId);
+    }
+
+    @Test
+    void findSchoolWithStudentsWhenSchoolOptionalEqualToEmpty(){
+        Long schoolId = 1L;
+        when(schoolRepository.findById(schoolId)).thenReturn(Optional.empty());
+        assertThrows(SchoolNotFoundException.class,()->{
+            schoolService.findSchoolWithStudents(schoolId);
+        });
     }
 
     @Test

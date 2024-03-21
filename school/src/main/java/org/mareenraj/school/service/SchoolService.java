@@ -1,5 +1,6 @@
 package org.mareenraj.school.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.mareenraj.school.client.StudentClient;
 import org.mareenraj.school.converter.SchoolConverter;
@@ -22,6 +23,7 @@ public class SchoolService {
 
     private final SchoolConverter schoolConverter;
 
+    @Transactional
     public void saveSchool(SchoolDto schoolDto) {
         schoolRepository.save(schoolConverter.convertToSchool(schoolDto));
     }
@@ -46,6 +48,7 @@ public class SchoolService {
         }
     }
 
+    @Transactional
     public void deleteSchoolById(Long id) {
         if (schoolRepository.existsById(id)) {
             schoolRepository.deleteById(id);
@@ -63,6 +66,7 @@ public class SchoolService {
         }
     }
 
+    @Transactional
     public SchoolDto updateSchoolById(Long id, SchoolDto updatedSchoolDto) {
         Optional<School> schoolOptional = schoolRepository.findById(id);
         if (schoolOptional.isPresent()) {
